@@ -1,0 +1,49 @@
+<div class="CoordinateSearch" data-dojo-type="dijit.layout.ContentPane">
+	<div data-dojo-type="dijit.TitlePane" data-dojo-attach-point="llPane" data-dojo-props='title:"Lat/Lon:"' style="overflow: auto">
+		<div>Latitude:
+			<input type="text" data-dojo-type="dijit.form.TextBox" trim="true" data-dojo-attach-point="latNode" data-dojo-props="placeHolder: '44.1234'">
+		</div>
+		<div>
+			Longitude:
+			<input type="text" data-dojo-type="dijit.form.TextBox" trim="true" data-dojo-attach-point="lonNode" data-dojo-props="placeHolder: '-92.3088'">
+		</div>
+		<div style="text-align: right">
+			<button data-dojo-type="dijit.form.Button" data-dojo-attach-point="searchLLBtn" type="button">
+				Search
+			</button>
+		</div>
+	</div>
+	<div data-dojo-type="dijit.TitlePane" data-dojo-attach-point="xyPane" data-dojo-props='title:"X/Y:"' style="overflow: auto">
+		<div>X:
+			<input type="text" data-dojo-type="dijit.form.TextBox" trim="true" data-dojo-attach-point="xNode" data-dojo-props="placeHolder: '530000'">
+		</div>
+		<div>
+			Y:
+			<input type="text" data-dojo-type="dijit.form.TextBox" trim="true" data-dojo-attach-point="yNode" data-dojo-props="placeHolder: '171000'">
+		</div>
+		<div style="text-align: right">
+			<button data-dojo-type="dijit.form.Button" data-dojo-attach-point="searchXYBtn" type="button">
+				Search
+			</button>
+		</div>
+	</div>
+	<div data-dojo-type="dijit.TitlePane" data-dojo-attach-point="usngPane" data-dojo-props='title:"USNG:"' style="overflow: auto">
+		<div>
+			USNG/MGRS:
+			<input type="text" data-dojo-type="dijit.form.TextBox" trim="true" data-dojo-attach-point="usngNode" data-dojo-props="placeHolder: '15TVK123456'">
+		</div>
+		<div style="text-align: right">
+			<button data-dojo-type="dijit.form.Button" data-dojo-attach-point="searchUSNGBtn" type="button">
+				Search
+			</button>
+		</div>
+	</div>
+
+	<div data-dojo-type="dijit.TitlePane" data-dojo-props='title:"Current Location:"' style="overflow: auto">
+		<div style="text-align: right">
+			<button data-dojo-type="dijit.form.Button" data-dojo-attach-point="locateBtn" type="button">
+				My Location
+			</button>
+		</div>
+	</div>
+</div>
