@@ -661,7 +661,29 @@ window.GeoMOOSE = {
 	 *  name - The name of the mapsource to activate.
 	 */
 	activateMapSource: function(name) {
+		var active_map_source = GeoMOOSE.getActiveMapSource();
+		if(GeoMOOSE.isDefined(active_map_source)) {
+			var map_source = Application.getMapSource(active_map_source); 
+			map_source.deactivate();
+		}
 		Application.activateMapSource(name);
+	},
+
+	/*
+	 * Function: deactivateMapSource
+	 * Sets the active map source to null
+	 * and turns off the controls on any active map source.
+	 */
+	deactiveMapSource: function(path) {
+		if(!GeoMOOSE.isDefined(path)) { path = GeoMOOSE.getActiveMapSource(); }
+
+		var map_source = Application.getMapSource(path);
+		if(GeoMOOSE.isDefined(map_source)) {
+			map_source.deactivate();
+		}
+		if(path == GeoMOOSE.getActiveMapSource()) {
+			GeoMOOSE.activateMapSource(null);
+		}
 	},
 
 	/*
@@ -768,26 +790,43 @@ window.GeoMOOSE = {
 	 * Method: activateLayerTool
 	 * Activates a layer tool
 	 */
-	activateLayerTool: function(action) {
+	activateLayerTool: function(action, kwargs) {
 		//return Application.getMapSource(layerName).getUrl();
 		var active_map_source = GeoMOOSE.getActiveMapSource();
 		if(!GeoMOOSE.isDefined(active_map_source)) {
 			GeoMOOSE.error('There is no actively selected layer.  Please activate a layer from the catalog.');
 		} else {
 			var map_source = Application.getMapSource(active_map_source);
-			console.log(active_map_source, map_source, map_source.supports[action]);
 			if(map_source.supports[action] === true) {
 				/* okay, let's go! */
 				if(this.selectable) {
 					this._deactivateTools();
 				}
-				map_source.controls[action].activate();
+				if(GeoMOOSE.isDefined(kwargs)) {
+					map_source.controls[action].activate(kwargs);
+				} else {
+					map_source.controls[action].activate();
+				}
 			} else {
 				GeoMOOSE.error('The current active layer does not support your selected action.');
 			}
 		}
 
 
+	},
+
+	/*
+	 * Method: activateDefaultTool
+	 * This is a bit of a "pull the 'chute" call.  Starts up the pan tool.
+	 *  In the future this needs to be more configurable.
+	 */
+	activateDefaultTool: function() {
+		var toolbar = dijit.byId('toolbar');
+		if(GeoMOOSE.isDefined(toolbar.tools[CONFIGURATION.default_tool])) {
+			toolbar.tools[CONFIGURATION.default_tool].onClick();
+		} else {
+			GeoMOOSE.warning('Could not activateDefaultTool "'+CONFIGURATION.default_tool+'" as it is not defined in the toolbar.');
+		}
 	}
 	
 };

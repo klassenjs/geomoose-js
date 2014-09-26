@@ -25,6 +25,7 @@ dojo.require('dijit.layout.TabContainer');
 dojo.require('dojox.widget.Standby');
 
 dojo.registerModulePath('GeoMOOSE', '../../../geomoose/GeoMOOSE');
+dojo.require('GeoMOOSE.Popup');
 dojo.require('GeoMOOSE.Application');
 
 dojo.require('GeoMOOSE.Handler.Box');
@@ -44,7 +45,6 @@ dojo.require('GeoMOOSE.MapSource.MapServer');
 dojo.require('GeoMOOSE.MapSource.TMS');
 dojo.require('GeoMOOSE.MapSource.XYZ');
 dojo.require('GeoMOOSE.MapSource.Google');
-dojo.require('GeoMOOSE.MapSource.Yahoo');
 dojo.require('GeoMOOSE.MapSource.AGS');
 
 

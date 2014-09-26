@@ -79,7 +79,9 @@ dojo.declare('GeoMOOSE.MapSource.WMS', [GeoMOOSE.MapSource], {
 			ratio: CONFIGURATION.layer_options.ratio, /* (1) only applies in single tile mode */
 			buffer: CONFIGURATION.layer_options.buffer, /* (0) only applies in tiled/gridded mode */
 			transitionEffect: transitionEffect,
-			visibility: this.isVisible()
+			visibility: this.isVisible(),
+			/* by default setup the popup controls */
+			popups: parseBoolean(mapbook_entry.getAttribute('popups'), true)
 		};
 
 		transitionEffect = mapbook_entry.getAttribute('transitionEffect');
@@ -128,7 +130,58 @@ dojo.declare('GeoMOOSE.MapSource.WMS', [GeoMOOSE.MapSource], {
 
 		this.updateParameters({});
 
+		this.supports = {'popups': true};
 		this.onLayersChange();
+	},
+
+	addToMap: function(map) {
+		this.inherited(arguments);
+
+		var feature_info_control = new OpenLayers.Control.WMSGetFeatureInfo({
+			'url' : this.urls[0],
+			'layers' : [this._ol_layer],
+			'hover' : true,
+			'queryVisible' : true,
+			'vendorParams' : this.params
+		});
+
+		feature_info_control._activate = feature_info_control.activate;
+
+		feature_info_control.activate = function(kwargs) {
+			if(GeoMOOSE.isDefined(kwargs) && GeoMOOSE.isDefined(kwargs.title)) {
+				this.title = kwargs.title;
+			} else {
+				this.title = '&nbsp;';
+			}
+			this._activate();
+		}
+
+		/* this corrects a bug we were having with IE11,
+		 *  OpenLayers document sniffing was causing issues. */
+		feature_info_control.handleResponse = function(xy, request, url) {
+			this.triggerGetFeatureInfo(request, xy, []);
+		}
+
+		feature_info_control.events.register('getfeatureinfo', {layer: this, control: feature_info_control}, function(ev) {
+			var ol_map = this.layer._ol_layer.map;
+			var popup_id = 'popup'+GeoMOOSE.id();
+			if(ev.text && ev.text.length > 1) {
+				ol_map.addPopup({
+					clearOnMove: true,
+					renderOnAdd: true,
+					renderXY: ev.xy, 
+					id: popup_id,
+					title: this.control.title,
+					classNames: [this.layer.cssName],
+					content: ev.text
+				});
+			}
+		});
+
+		this.controls = {
+			'popups' : feature_info_control 
+		}
+		map.addControl(this.controls['popups']);
 	},
 
 	/**
@@ -162,7 +215,7 @@ dojo.declare('GeoMOOSE.MapSource.WMS', [GeoMOOSE.MapSource], {
 		for(var i = 0, ii = keepers.length; i < ii; i++) {
 			new_params[keepers[i]] = this._ol_layer.DEFAULT_PARAMS[keepers[i]];
 		}
-			
+		this.params = {};		
 		this._ol_layer.params = new_params;
 	},
 
