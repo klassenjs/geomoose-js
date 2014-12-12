@@ -167,7 +167,7 @@ dojo.declare('GeoMOOSE.MapSource.WMS', [GeoMOOSE.MapSource], {
 			var popup_id = 'popup'+GeoMOOSE.id();
 			if(ev.text && ev.text.length > 1) {
 				ol_map.addPopup({
-					clearOnMove: true,
+					clearOnMove: this.layer.clearPopupsOnMove,
 					renderOnAdd: true,
 					renderXY: ev.xy, 
 					id: popup_id,
@@ -249,7 +249,16 @@ dojo.declare('GeoMOOSE.MapSource.WMS', [GeoMOOSE.MapSource], {
 			param_array.push(k + "=" + params[k]); // URL encode
 		}
 
-		var legendURL = urls[0].split('?')[0] + "?";  // loop over urls
+		var legendURL = urls[0]; 
+
+		// Check to see if there is a ? in the 
+		//  URL, if so, add a '&' before adding parameters
+		//  or add the ? 
+		if(legendURL.indexOf('?') > 0) {
+			legendURL+='&';
+		} else {
+			legendURL+='?';
+		}
 		legendURL += param_array.join('&');
 
 		// Loop over layers and get legend all legnd chips
