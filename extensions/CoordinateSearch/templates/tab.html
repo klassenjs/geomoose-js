@@ -9,7 +9,7 @@
 		</div>
 		<div style="text-align: right">
 			<button data-dojo-type="dijit.form.Button" data-dojo-attach-point="searchLLBtn" type="button">
-				Search
+				Pan to Lat/Lon
 			</button>
 		</div>
 	</div>
@@ -23,26 +23,29 @@
 		</div>
 		<div style="text-align: right">
 			<button data-dojo-type="dijit.form.Button" data-dojo-attach-point="searchXYBtn" type="button">
-				Search
+				Pan to X/Y
 			</button>
 		</div>
 	</div>
-	<div data-dojo-type="dijit.TitlePane" data-dojo-attach-point="usngPane" data-dojo-props='title:"USNG:"' style="overflow: auto">
+	<div data-dojo-type="dijit.TitlePane" data-dojo-attach-point="usngPane" data-dojo-props='title:"USNG/MGRS:"' style="overflow: auto">
 		<div>
 			USNG/MGRS:
 			<input type="text" data-dojo-type="dijit.form.TextBox" trim="true" data-dojo-attach-point="usngNode" data-dojo-props="placeHolder: '15TVK123456'">
 		</div>
 		<div style="text-align: right">
 			<button data-dojo-type="dijit.form.Button" data-dojo-attach-point="searchUSNGBtn" type="button">
-				Search
+				Zoom to Grid Square
 			</button>
 		</div>
 	</div>
 
 	<div data-dojo-type="dijit.TitlePane" data-dojo-props='title:"Current Location:"' style="overflow: auto">
+		<div>
+			Note: This requires your browser to support and allow GeoMoose to query your location.
+		</div>
 		<div style="text-align: right">
 			<button data-dojo-type="dijit.form.Button" data-dojo-attach-point="locateBtn" type="button">
-				My Location
+				Pan to My Location
 			</button>
 		</div>
 	</div>

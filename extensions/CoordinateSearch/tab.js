@@ -76,7 +76,11 @@ dojo.declare('extensions.CoordinateSearch.tab', [GeoMOOSE.Tab, dijit._Widget, di
 			this.yNode.set('value', pt.y);
 
 			var LL = new OpenLayers.LonLat(pt.x, pt.y);
-			Map.panTo(LL);
+			if(Map.isValidLonLat(LL)) {
+				Map.panTo(LL);
+			} else {
+				alert("Cannot pan to requested coordinate because it falls outside the bounds of this map.");
+			}
 		} 
 		catch( e ) 
 		{
@@ -99,7 +103,11 @@ dojo.declare('extensions.CoordinateSearch.tab', [GeoMOOSE.Tab, dijit._Widget, di
 			this.usngNode.set('value', this.usng.fromLonLat({lon: pt.x, lat: pt.y}, 4));
 
 			var LL = new OpenLayers.LonLat(x, y);
-			Map.panTo(LL);
+			if(Map.isValidLonLat(LL)) {
+				Map.panTo(LL);
+			} else {
+				alert("Cannot pan to requested coordinate because it falls outside the bounds of this map.");
+			}
 		} 
 		catch( e ) 
 		{
@@ -111,9 +119,7 @@ dojo.declare('extensions.CoordinateSearch.tab', [GeoMOOSE.Tab, dijit._Widget, di
 		console.log("Got new position: " + loc.timestamp + ": " + loc.coords.latitude + "/" + loc.coords.longitude);
 		this.latNode.set('value', loc.coords.latitude);
 		this.lonNode.set('value', loc.coords.longitude);
-		//this.usngNode.set('value', this.usng.fromLonLat({lon: loc.coords.longitude, lat: loc.coords.latitude} , 4));
-		this.onZoomToLL();
-		Map.zoomTo(15);
+		return this.onZoomToLL();
 	},
 
 	onLocateMe: function() {
