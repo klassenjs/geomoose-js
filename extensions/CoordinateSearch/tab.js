@@ -81,6 +81,13 @@ dojo.declare('extensions.CoordinateSearch.tab', [GeoMOOSE.Tab, dijit._Widget, di
 			} else {
 				alert("Cannot pan to requested coordinate because it falls outside the bounds of this map.");
 			}
+	
+			lat_short = parseFloat(lat).toFixed(4);
+			lon_short = parseFloat(lon).toFixed(4);
+			GeoMOOSE.addPopupGround(pt.x, pt.y,
+				"<b>Lat:</b> " + lat + "<br>" + "<b>Lon:</b> " + lon,
+				"<b>Lat:</b> " + lat_short + " " + "<b>Lon:</b> " + lon_short
+			);
 		} 
 		catch( e ) 
 		{
@@ -108,6 +115,13 @@ dojo.declare('extensions.CoordinateSearch.tab', [GeoMOOSE.Tab, dijit._Widget, di
 			} else {
 				alert("Cannot pan to requested coordinate because it falls outside the bounds of this map.");
 			}
+
+			x_short = parseFloat(x).toFixed(1);
+			y_short = parseFloat(y).toFixed(1);
+			GeoMOOSE.addPopupGround(x, y,
+				"<b>X:</b> " + x + "<br>" + "<b>Y:</b> " + y,
+				"<b>X:</b> " + x_short + " "    + "<b>Y:</b> " + y_short
+			);
 		} 
 		catch( e ) 
 		{
