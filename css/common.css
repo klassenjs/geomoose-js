@@ -278,6 +278,10 @@ body {
 /*** This is some new stuff for 2.6.  It will get reorg'd in a new minor revision to supprot
  CSS Compilation ***/
 
+#toolbar .dijitDisabled {
+ 	opacity: .5;
+}
+
 .sprite-control-activate {
 	background-image: url('../images/activate.png') !important;
 	background-position: 0px 0px !important;
@@ -378,10 +382,8 @@ body {
 	padding-left: 16px;
 	padding-top: 16px;
 	background-image: url(../images/close.png);
-	/*position: absolute;
-	top: 0; right: 0;*/
-	float: right;
-	cursor: pointer;
+	position: absolute;
+	top: 2px; right: 2px;
 }
 
 .Popup .title {
